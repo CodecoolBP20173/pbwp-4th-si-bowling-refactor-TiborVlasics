@@ -7,25 +7,20 @@ def score(game):
             result += 10 - last_roll
         else:
             result += get_score_for_roll(game[roll])
-        if frame < 10 and get_score_for_roll(game[roll]) == 10:
-            if game[roll] == '/':
-                result += get_score_for_roll(game[roll+1])
-            elif game[roll].lower() == 'x':
-                result += get_score_for_roll(game[roll+1])
+        if frame < 10 and game[roll] in '/Xx':
+            result += get_score_for_roll(game[roll+1])
+            if game[roll].lower() == 'x':
                 if game[roll+2] == '/':
                     result += 10 - get_score_for_roll(game[roll+1])
                 else:
                     result += get_score_for_roll(game[roll+2])
         last_roll = get_score_for_roll(game[roll])
-        if not in_first_half:
+
+        if not in_first_half or game[roll].lower() == 'x':
             frame += 1
-        if in_first_half is True:
-            in_first_half = False
+            in_first_half = True
         else:
-            in_first_half = True
-        if game[roll].lower() == 'x':
-            in_first_half = True
-            frame += 1
+            in_first_half = False
     return result
 
 
