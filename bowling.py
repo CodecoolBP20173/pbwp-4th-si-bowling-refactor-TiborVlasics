@@ -4,9 +4,10 @@ def score(game):
     in_first_half_of_frame = True
     for roll in range(len(game)):
         if game[roll] == '/':
-            result += 10 - last_roll
+            result += 10 - get_score_for_roll(game[roll - 1])
         else:
             result += get_score_for_roll(game[roll])
+
         if frame < 10 and game[roll] in '/Xx':
             result += get_score_for_roll(game[roll+1])
             if game[roll].lower() == 'x':
@@ -14,7 +15,6 @@ def score(game):
                     result += 10 - get_score_for_roll(game[roll+1])
                 else:
                     result += get_score_for_roll(game[roll+2])
-        last_roll = get_score_for_roll(game[roll])
 
         if not in_first_half_of_frame or game[roll].lower() == 'x':
             frame += 1
@@ -25,11 +25,9 @@ def score(game):
 
 
 def get_score_for_roll(char):
-    if char in "123456789":
-        return int(char)
+    if char in "-123456789":
+        return "-123456789".index(char)
     elif char in "Xx/":
         return 10
-    elif char == '-':
-        return 0
     else:
         raise ValueError()
