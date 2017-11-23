@@ -1,7 +1,7 @@
 def score(game):
     result = 0
     frame = 1
-    in_first_half = True
+    in_first_half_of_frame = True
     for roll in range(len(game)):
         if game[roll] == '/':
             result += 10 - last_roll
@@ -16,11 +16,11 @@ def score(game):
                     result += get_score_for_roll(game[roll+2])
         last_roll = get_score_for_roll(game[roll])
 
-        if not in_first_half or game[roll].lower() == 'x':
+        if not in_first_half_of_frame or game[roll].lower() == 'x':
             frame += 1
-            in_first_half = True
+            in_first_half_of_frame = True
         else:
-            in_first_half = False
+            in_first_half_of_frame = False
     return result
 
 
